@@ -1,0 +1,44 @@
+<section *ngIf="productDetails" class="w-75 p-3 mx-auto rounded shadow mb-4">
+    <div class="row align-items-center g-4 ">
+        <div class="col-md-3 ">
+            <owl-carousel-o [options]="productDetailsOptions">
+
+                <ng-container *ngFor="let path of productDetails.images">
+                  <ng-template carouselSlide>
+                    <img [src]="path" alt="" class="w-100">
+                  </ng-template>
+                </ng-container>
+            
+              </owl-carousel-o>
+        </div>
+<div class="col-md-9">
+
+   <div  class="wish">
+   
+<i *ngIf="!wishlistData.includes($any(productDetails._id))"  
+(click)="addToMyWishlist(productDetails._id)" 
+class="fa-regular fa-heart   icon my-wish"></i>
+
+
+<i *ngIf="wishlistData.includes($any(productDetails._id))"  
+(click)="removeWishlist(productDetails._id)"
+class="fa-solid fa-heart  icon "></i>
+  </div> 
+   <div>
+    <h2 class="h5">{{productDetails.title}}</h2>
+    <p class="text-muted">{{productDetails.description}}</p>
+    <span>{{productDetails.category.name}}</span>
+   </div>
+   <div class="d-flex justify-content-between align-items-center my-3">
+    <span class="small">
+        {{productDetails.price | currency:"EGP"}}
+    </span>
+    <p class="mb-0">
+        <i class="fas fa-star rating-color"></i> {{productDetails.ratingsAverage}}</p>
+   </div>
+   <button class="btn-main py-2 w-100" (click)="addProduct(productDetails._id ,btnAdd )" #btnAdd>
+    +Add To Cart
+</button>
+</div>
+    </div>
+</section>

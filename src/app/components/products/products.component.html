@@ -1,0 +1,69 @@
+<section class="py-4" *ngIf="Products.length >0">
+      <h2 class="text-center  text-main mb-2">All Products</h2>
+
+      <input type="text" 
+      class="form-control  w-50  form-control-sm mx-auto my-3"
+       placeholder="Search...." [(ngModel)]="term">
+
+    <div class="row  g-4 justify-content-center">
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2" 
+        *ngFor="let product of Products |search:term 
+        | paginate:
+            { id: 'productPaginate',
+                itemsPerPage: pageSize,
+                currentPage: curentPage,
+                totalItems: total }">
+            <div class="product h-100">
+
+
+<!-- add  -->
+<i *ngIf="!wishlistData.includes($any(product._id))"  
+(click)="addToMyWishlist(product._id)" 
+class="fa-regular fa-heart  heart my-wish"></i>
+
+<!-- remove  -->
+<i *ngIf="wishlistData.includes($any(product._id))"  
+(click)="removeWishlist(product._id)"
+class="fa-solid fa-heart heart"></i>
+
+
+                <header [routerLink]="['/details',product._id]" role="button">
+                    <img class="w-100"
+                    [src]="product.imageCover" 
+                    [alt]="product.title"
+                     [title]="product.title" />
+                     <h3 class="small">{{product.title | cuttext:2}}</h3>
+                     <h4 class="h6 text-main">{{product.category.name}}</h4>
+                     <div class="d-flex align-items-center justify-content-between small">
+                        <span >{{product.price | currency:"e£"}}</span>
+                        <p class="mb-0" >
+                            <i [class.rating-color]="product.ratingsAverage >= num" *ngFor="let num of [1,2,3,4,5]" class="fas fa-star"></i>
+                           
+                            <span class="text-muted">  {{product.ratingsAverage}}</span>
+                        </p>
+                     </div>
+                </header>
+               <footer>
+                <button class="btn-main py-2 w-100" (click)="addProduct(product._id ,btnAdd )" #btnAdd>
+                    +Add To Cart
+                </button>
+               </footer>
+            </div>
+        </div>
+    </div>
+<div class="d-flex justify-content-center align-items-center ">
+    <pagination-controls  id="productPaginate"
+    (pageChange)="pageChanged($event)"
+    (pageBoundsCorrection)="pageChanged($event)"
+    [maxSize]=9
+    [directionLinks]=true
+    [autoHide]=true
+    [responsive]=true
+    previousLabel="Previous"
+    nextLabel="Next"
+    screenReaderPaginationLabel="Pagination"
+    screenReaderPageLabel="page"
+    screenReaderCurrentLabel="You're on page">
+</pagination-controls>
+</div>
+</section>

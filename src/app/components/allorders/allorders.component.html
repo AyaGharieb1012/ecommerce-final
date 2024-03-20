@@ -1,0 +1,49 @@
+<section class="w-100 p-3 mx-auto rounded shadow mb-4">
+   <div class="row ">
+    <div class="col-md-12"  *ngFor="let item of allorder" >
+        <div class="row   mt-3 d-flex justify-content-center align-items-center text-center rounded border-1  bg-body-secondary  " >
+           <div class="col-md-3 d-flex justify-content-center align-items-center text-center">
+            <div class="text-center">
+                Data:
+                <span class="text-main">{{item.createdAt | date : "dd/MM/yyyy"}}</span>
+            </div>
+           </div>
+           <div class="col-md-3 d-flex justify-content-center align-items-center text-center">
+            <div>
+                payment:
+                <span class="text-main ">{{item.paymentMethodType}}</span>
+            </div>
+           </div>
+           <div class="col-md-3 d-flex justify-content-center align-items-center text-center">
+            <div>
+                price:
+                <span class="text-main">{{item.totalOrderPrice}}</span>
+            </div>
+           </div>
+           <div class="col-md-3 d-flex justify-content-center align-items-center text-center">
+            <div>
+                numberofitem:
+                <span class="text-main">{{item.cartItems.length}}</span>
+            </div>
+           </div>
+        </div>
+        <div class="row g-4 mt-2 d-flex justify-content-center align-items-center text-center">
+            <div class="col-md-3" *ngFor="let cart of item.cartItems ">
+                <div class="product  p-3 border shadow rounded h-100">
+                    <div class="productLayer  p-4 text-center"   >                        
+                            <img [src]="cart.product?.imageCover" class="w-25" [alt]="cart.product?.title" />
+                            <p class="text-main mb-0 ">{{cart.product.title}}</p>  
+                            <p class="text-main badge bg-body-secondary mb-0">{{cart.product.category.name|uppercase}}</p>  
+                            <div class="d-flex justify-content-between ">
+                                <p class="text-black-50"><span class="text-black ">Price:</span> {{cart?.price| currency:'EGP '}} </p>
+                                <p class="text-black-50"><span class="text-black">count:</span> {{cart?.count}} </p>
+                            </div>                       
+                    </div>  
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+   
+</section>
